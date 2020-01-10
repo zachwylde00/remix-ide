@@ -281,6 +281,7 @@ Please make a backup of your contracts and start using http://remix.ethereum.org
   appManager.register([
     menuicons,
     landingPage,
+    hiddenPanel,
     sidePanel,
     pluginManagerComponent,
     filePanel,
@@ -333,7 +334,8 @@ Please make a backup of your contracts and start using http://remix.ethereum.org
 
   await appManager.activate(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'offsetToLineColumnConverter'])
   await appManager.activate(['mainPanel'])
-  await appManager.activate(['menuicons', 'home', 'sidePanel', 'pluginManager', 'fileExplorers', 'settings'])
+  await appManager.activate(['menuicons', 'home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings'])
+  await appManager.activate(['scriptRunner'])
 
   // Set workspace after initial activation
   if (Array.isArray(workspace)) await appManager.activate(workspace)

@@ -81,7 +81,7 @@ class Terminal extends Plugin {
       scopedCommands.log(`> ${script}`)
       self._shell(script, scopedCommands, function (error, output) {
         if (error) scopedCommands.error(error)
-        else scopedCommands.log(output)
+        else if (output) scopedCommands.log(output)
       })
     }, { activate: true })
     function basicFilter (value, query) { try { return value.indexOf(query) !== -1 } catch (e) { return false } }
@@ -128,6 +128,11 @@ class Terminal extends Plugin {
         ${self._view.input}
       </div>
     `
+
+    this.on('scriptRunner', 'log', (msg) => {
+      this.commands[msg.cmd].apply(this.commands, msg.data)
+    })
+
     self._view.icon = yo`
       <i onmouseenter=${hover} onmouseleave=${hover} onmousedown=${minimize}
       class="btn btn-secondary btn-sm align-items-center ${css.toggleTerminal} fas fa-angle-double-down"></i>`
@@ -663,17 +668,27 @@ class Terminal extends Plugin {
     }
     return self.commands[name]
   }
-  _shell (script, scopedCommands, done) { // default shell
+  async _shell (script, scopedCommands, done) { // default shell
     if (script.indexOf('remix:') === 0) {
       return done(null, 'This type of command has been deprecated and is not functionning anymore. Please run remix.help() to list available commands.')
     }
     var self = this
-    var context = domTerminalFeatures(self, scopedCommands, self.blockchain)
+    if (script.indexOf('remix.') === 0) {
+      // we keep the old feature. This will basically only be called when the command is querying the "remix" object.
+      // for all the other case, we use the Code Executor plugin
+      var context = domTerminalFeatures(self, scopedCommands, self.blockchain)
+      try {
+        var cmds = vm.createContext(Object.assign(self._jsSandboxContext, context, self._jsSandboxRegistered))
+        var result = vm.runInContext(script, cmds)
+        self._jsSandboxContext = Object.assign(cmds, context)
+        return done(null, result)
+      } catch (error) {
+        return done(error.message)
+      }
+    }
     try {
-      var cmds = vm.createContext(Object.assign(self._jsSandboxContext, context, self._jsSandboxRegistered))
-      var result = vm.runInContext(script, cmds)
-      self._jsSandboxContext = Object.assign(cmds, context)
-      done(null, result)
+      await this.call('scriptRunner', 'execute', script)
+      done()
     } catch (error) {
       done(error.message)
     }
