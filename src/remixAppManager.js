@@ -5,7 +5,7 @@ import { PermissionHandler } from './app/ui/persmission-handler'
 import QueryParams from './lib/query-params'
 
 const requiredModules = [ // services + layout views + system views
-  'compilerArtefacts', 'compilerMetadata', 'contextualListener', 'editor', 'offsetToLineColumnConverter', 'network', 'theme', 'fileManager', 'contentImport',
+  'compilerArtefacts', 'compilerMetadata', 'contextualListener', 'editor', 'offsetToLineColumnConverter', 'network', 'theme', 'fileManager', 'contentImport', 'remixCodeExecutor',
   'mainPanel', 'hiddenPanel', 'sidePanel', 'menuicons', 'fileExplorers',
   'terminal', 'settings', 'pluginManager']
 
@@ -79,7 +79,18 @@ export class RemixAppManager extends PluginEngine {
   async registeredPlugins () {
     const res = await fetch(this.pluginsDirectory)
     const plugins = await res.json()
-    return plugins.map(plugin => new IframePlugin(plugin))
+    const remixCodeExecutor = {
+      name: 'remixCodeExecutor',
+      displayName: 'Remix Code Executor',
+      description: 'Execute script in a separate environment',
+      methods: ['execute'],
+      events: [],
+      version: '0.1.0-beta',
+      url: 'codeExecutionWorker.html',
+      icon: '',
+      location: 'hiddenPanel'
+    }
+    return [new IframePlugin(remixCodeExecutor), ...plugins.map(plugin => new IframePlugin(plugin))]
   }
 }
 

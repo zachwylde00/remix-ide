@@ -22,6 +22,7 @@ jobs:
     steps:
       - checkout
       - run: npm install
+      - run: npm run build_codeExecutionWorker
       - run: npm run lint && npm run test && npm run make-mock-compiler
       - run:
           name: Download Selenium

@@ -45,6 +45,10 @@ npm run setupremix  # only if you plan to link remix and remix-ide repositories 
 npm start
 ```
 
+The Remix terminal runs scripts in a plugin that is by activated by default by Remix. 
+The plugin code needs to be built before running any script. 
+Please execute `npm run build_codeExecutionWorker` if you intend to use the Remix terminal.
+
 ## DEVELOPING:
 
 Run `npm start` and open `http://127.0.0.1:8080` in your browser.
