@@ -44,6 +44,7 @@ import { FramingService } from './framingService'
 import { MainView } from './app/panels/main-view'
 import { ThemeModule } from './app/tabs/theme-module'
 import { NetworkModule } from './app/tabs/network-module'
+import { AppWeb3Provider } from './app/tabs/app-web3-provider'
 import { SidePanel } from './app/components/side-panel'
 import { HiddenPanel } from './app/components/hidden-panel'
 import { VerticalIcons } from './app/components/vertical-icons'
@@ -235,6 +236,8 @@ Please make a backup of your contracts and start using http://remix.ethereum.org
   const {eventsDecoder, txlistener} = makeUdapp(blockchain, compilersArtefacts, (domEl) => mainview.getTerminal().logHtml(domEl))
   // ----------------- network service (resolve network id / name) ----------------------------
   const networkModule = new NetworkModule(blockchain)
+  // ----------------- represent the current selected web3 provider ----------------------------
+  const appWeb3Provider = new AppWeb3Provider(blockchain)
   // ----------------- convert offset to line/column service ----------------------------
   var offsetToLineColumnConverter = new OffsetToLineColumnConverter()
   registry.put({api: offsetToLineColumnConverter, name: 'offsettolinecolumnconverter'})
@@ -247,6 +250,7 @@ Please make a backup of your contracts and start using http://remix.ethereum.org
     compilerMetadataGenerator,
     compilersArtefacts,
     networkModule,
+    appWeb3Provider,
     offsetToLineColumnConverter
   ])
 
@@ -332,7 +336,7 @@ Please make a backup of your contracts and start using http://remix.ethereum.org
     console.log('couldn\'t register iframe plugins', e.message)
   }
 
-  await appManager.activate(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'offsetToLineColumnConverter'])
+  await appManager.activate(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'appWeb3Provider', 'offsetToLineColumnConverter'])
   await appManager.activate(['mainPanel'])
   await appManager.activate(['menuicons', 'home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings'])
   await appManager.activate(['remixCodeExecutor'])

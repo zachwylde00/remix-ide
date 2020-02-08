@@ -5,9 +5,17 @@ import ethers from 'ethers' // eslint-disable-line
 import Web3 from 'web3' // eslint-disable-line
 import swarmgw_fn from 'swarmgw' // eslint-disable-line
 window.swarmgw = swarmgw_fn() // eslint-disable-line
-window.web3 = null // eslint-disable-line
 window.ethers = ethers
 window.Web3 = Web3
+
+class Web3Provider {
+  constructor (plugin) {
+    this.plugin = plugin
+  }
+  sendAsync (payload, callback) {
+    this.plugin.call('appWeb3Provider', 'sendAsync', payload).then(result => callback(null, result)).catch(e => callback(e.message))
+  }
+}
 
 class CodeExecutor extends PluginClient {
   execute (script) {
@@ -24,7 +32,11 @@ class CodeExecutor extends PluginClient {
     }
   }
 }
+
 window.codeExec = new CodeExecutor()
+window.appWeb3Provider = new Web3Provider(window.codeExec)
+window.web3 = new Web3(window.appWeb3Provider)
+
 connectIframe(window.codeExec)
 console.log = function () {
   window.codeExec.emit('log', {

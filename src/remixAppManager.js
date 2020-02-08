@@ -5,7 +5,7 @@ import { PermissionHandler } from './app/ui/persmission-handler'
 import QueryParams from './lib/query-params'
 
 const requiredModules = [ // services + layout views + system views
-  'compilerArtefacts', 'compilerMetadata', 'contextualListener', 'editor', 'offsetToLineColumnConverter', 'network', 'theme', 'fileManager', 'contentImport', 'remixCodeExecutor',
+  'compilerArtefacts', 'compilerMetadata', 'contextualListener', 'editor', 'offsetToLineColumnConverter', 'network', 'theme', 'fileManager', 'contentImport', 'remixCodeExecutor', 'appWeb3Provider',
   'mainPanel', 'hiddenPanel', 'sidePanel', 'menuicons', 'fileExplorers',
   'terminal', 'settings', 'pluginManager']
 
