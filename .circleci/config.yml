@@ -28,6 +28,7 @@ jobs:
           command: wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
           name: Start Selenium
+          command: ls
           command: java -Dwebdriver.gecko.driver="./node_modules/geckodriver/bin/geckodriver.exe" -jar selenium-server-standalone-3.5.3.jar
           background: true
       - run: ./ci/browser_tests.sh
