@@ -1,6 +1,5 @@
 'use strict'
 require('@babel/register')()
-const firefox = require('geckodriver')
 
 module.exports = {
   'src_folders': ['test-browser/tests'],
@@ -9,17 +8,6 @@ module.exports = {
   'custom_assertions_path': '',
   'page_objects_path': '',
   'globals_path': '',
-
-  'selenium': {
-    'host': '127.0.0.1',
-    'port': 4444,
-    'cli_args': {
-      'webdriver.chrome.driver': '',
-      'webdriver.gecko.driver': firefox.path,
-      'webdriver.edge.driver': '',
-      'webdriver.ie.driver': ''
-    }
-  },
 
   'test_settings': {
     'default': {
