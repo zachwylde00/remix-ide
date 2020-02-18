@@ -60,7 +60,7 @@ module.exports = {
         'browserName': 'firefox',
         'javascriptEnabled': true,
         'acceptSslCerts': true,
-        'marionette': start
+        'marionette': true
       }
     }
   }
