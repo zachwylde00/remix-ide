@@ -10,14 +10,14 @@ module.exports = {
   'page_objects_path': '',
   'globals_path': '',
 
-  "selenium": {
-    "host": "127.0.0.1",
-    "port": 4444,
-    "cli_args": {
-    "webdriver.chrome.driver": "",
-    "webdriver.gecko.driver": firefox.path,
-    "webdriver.edge.driver": "",
-    "webdriver.ie.driver": ""
+  'selenium': {
+    'host': '127.0.0.1',
+    'port': 4444,
+    'cli_args': {
+      'webdriver.chrome.driver': '',
+      'webdriver.gecko.driver': firefox.path,
+      'webdriver.edge.driver': '',
+      'webdriver.ie.driver': ''
     }
   },
 
