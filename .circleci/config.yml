@@ -22,11 +22,11 @@ jobs:
     steps:
       - checkout
       - run: npm install
-      - run: ls
       - run: npm run lint && npm run test && npm run make-mock-compiler
       - run:
           name: Download Selenium
           command: wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run: ls
       - run:
           name: Start Selenium
           command: java -Dwebdriver.gecko.driver="./node_modules/geckodriver/bin/geckodriver.exe" -jar selenium-server-standalone-3.5.3.jar
