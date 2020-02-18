@@ -9,6 +9,12 @@ module.exports = {
   'page_objects_path': '',
   'globals_path': '',
 
+  'selenium': {
+    'cli_args': {
+      'webdriver.gecko.driver': './node_modules/geckodriver/geckodriver.exe'
+    }
+  },
+
   'test_settings': {
     'default': {
       'selenium_port': 4444,
@@ -60,7 +66,7 @@ module.exports = {
         'browserName': 'firefox',
         'javascriptEnabled': true,
         'acceptSslCerts': true,
-        'marionette': false
+        'marionette': true
       }
     }
   }
