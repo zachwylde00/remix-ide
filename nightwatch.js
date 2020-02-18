@@ -58,9 +58,8 @@ module.exports = {
 
     'firefox': {
       'webdriver': {
-        'start_process': true,
         'server_path': firefox.path,
-        'port': 5555
+        'port': 4444
       },
       'desiredCapabilities': {
         'browserName': 'firefox',
