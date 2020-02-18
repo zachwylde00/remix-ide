@@ -34,7 +34,7 @@ jobs:
           command: tar -xf geckodriver-v0.26.0-linux64.tar.gz
       - run:
           name: Start Selenium
-          command: java -Dwebdriver.gecko.driver="./geckodriver" -jar selenium-server-standalone-3.5.3.jar
+          command: java -Dwebdriver.gecko.driver="./geckodriver.exe" -jar selenium-server-standalone-3.5.3.jar
           background: true
       - run: ./ci/browser_tests.sh
       - run: 
