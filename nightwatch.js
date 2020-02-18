@@ -10,6 +10,17 @@ module.exports = {
   'page_objects_path': '',
   'globals_path': '',
 
+  "selenium": {
+    "host": "127.0.0.1",
+    "port": 4444,
+    "cli_args": {
+    "webdriver.chrome.driver": "",
+    "webdriver.gecko.driver": firefox.path,
+    "webdriver.edge.driver": "",
+    "webdriver.ie.driver": ""
+    }
+  },
+
   'test_settings': {
     'default': {
       'selenium_port': 4444,
@@ -57,10 +68,6 @@ module.exports = {
     },
 
     'firefox': {
-      'webdriver': {
-        'server_path': firefox.path,
-        'port': 4444
-      },
       'desiredCapabilities': {
         'browserName': 'firefox',
         'javascriptEnabled': true,
