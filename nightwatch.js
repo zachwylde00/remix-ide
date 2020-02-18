@@ -64,7 +64,7 @@ module.exports = {
       'webdriver': {
         'start_process': true,
         'server_path': 'node_modules/selenium-standalone/.selenium/geckodriver/0.23.0-x64-geckodriver',
-        'port': 5555
+        'port': 4444
       },
       'desiredCapabilities': {
         'browserName': 'firefox',
