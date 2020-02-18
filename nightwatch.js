@@ -59,7 +59,7 @@ module.exports = {
       'desiredCapabilities': {
         'browserName': 'firefox',
         'javascriptEnabled': true,
-        'acceptSslCerts': true,
+        'acceptSslCerts': true
       }
     }
   }
