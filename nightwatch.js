@@ -9,6 +9,16 @@ module.exports = {
   'page_objects_path': '',
   'globals_path': '',
 
+  'selenium': {
+    'port': 4444,
+    'cli_args': {
+        'webdriver.chrome.driver': './node_modules/selenium-standalone/.selenium/chromedriver/2.43-x64-chromedriver',
+        'webdriver.gecko.driver': './node_modules/selenium-standalone/.selenium/geckodriver/0.23.0-x64-geckodriver',
+        'webdriver.ie.driver': '',
+        'webdriver.safari.driver': ''
+    }
+  },
+
   'test_settings': {
     'default': {
       'selenium_port': 4444,
@@ -59,7 +69,8 @@ module.exports = {
       'desiredCapabilities': {
         'browserName': 'firefox',
         'javascriptEnabled': true,
-        'acceptSslCerts': true
+        'acceptSslCerts': true,
+        'marionette': true
       }
     }
   }
