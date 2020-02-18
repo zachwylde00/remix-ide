@@ -1,5 +1,6 @@
 'use strict'
 require('@babel/register')()
+const firefox = require('geckodriver')
 
 module.exports = {
   'src_folders': ['test-browser/tests'],
@@ -29,11 +30,6 @@ module.exports = {
     },
 
     'chrome': {
-      'webdriver': {
-        'start_process': true,
-        'server_path': 'node_modules/selenium-standalone/.selenium/chromedriver/2.43-x64-chromedriver',
-        'port': 4444
-      },
       'desiredCapabilities': {
         'browserName': 'chrome',
         'javascriptEnabled': true,
@@ -63,8 +59,8 @@ module.exports = {
     'firefox': {
       'webdriver': {
         'start_process': true,
-        'server_path': 'node_modules/selenium-standalone/.selenium/geckodriver/0.23.0-x64-geckodriver',
-        'port': 4444
+        'server_path': firefox.path,
+        'port': 5555
       },
       'desiredCapabilities': {
         'browserName': 'firefox',

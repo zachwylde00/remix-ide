@@ -39,6 +39,7 @@
     "fast-async": "^7.0.6",
     "fast-levenshtein": "^2.0.6",
     "ganache-cli": "^6.8.1",
+    "geckodriver": "^1.19.1",
     "gists": "^1.0.1",
     "ipfs-mini": "^1.1.5",
     "is-electron": "^2.2.0",
