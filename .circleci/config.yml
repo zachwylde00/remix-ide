@@ -31,7 +31,7 @@ jobs:
           command: wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
       - run:
           name: Extract Gecko
-          command: unzip geckodriver-v0.26.0-linux64.tar.gz
+          command: tar -xf geckodriver-v0.26.0-linux64.tar.gz
       - run: ls
       - run:
           name: Start Selenium
