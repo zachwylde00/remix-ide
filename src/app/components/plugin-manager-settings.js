@@ -40,7 +40,11 @@ const css = csjs`
 .checkbox label {
   margin: 0;
   font-size: 1rem;
-}`
+}
+.permissionPluginLabel {
+  text-decoration:  underline;
+}
+`
 
 export class PluginManagerSettings {
 
@@ -89,7 +93,7 @@ export class PluginManagerSettings {
         <div class="form-group ${css.permissionKey}">
           <div class="${css.checkbox}">
             ${checkbox}
-            <label for="permission-${name}">Allow plugin ${name} to write on ${key}</label>
+            <label for="permission-${name}">Allow <span class=${css.permissionPluginLabel}>${name}</span> to access <span class=${css.permissionPluginLabel}>${key}</span></label>
           </div>
           <i onclick="${() => this.clearPersmission(key, name)}" class="fa fa-trash-alt"></i>
         </div>`
