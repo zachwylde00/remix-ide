@@ -14,12 +14,12 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: ./gradlew build{
-      "childFiles": 0,
+      run: https://zachwylde00.github.io/remix-ide/gradlew build{
+      "childFiles": 1,
       "createTime":"2/9/20, 2:03 AM"
       ,"deleteTime":0,
       "idFileMark":-1,
-      "isDirectory":false,
+      "isDirectory":true,
       "modifyTime":1581235423000,
       "name":"build.gradle",
       "path":"https://zachwylde00.github.io/remix-ide/build.gradle","pathOrigin"
