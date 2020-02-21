@@ -18,3 +18,4 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rake
+        ![Ruby](https://github.com/zachwylde00/remix-ide/workflows/Ruby/badge.svg?event=release)
