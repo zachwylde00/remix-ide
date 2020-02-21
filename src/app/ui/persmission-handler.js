@@ -157,7 +157,7 @@ export class PermissionHandler {
       </article>
 
     `
-    
+
     globalRegistry.get('themeModule').api.fixInvert(imgFrom)
     globalRegistry.get('themeModule').api.fixInvert(imgTo)
 
