@@ -34,7 +34,7 @@ jobs:
           name: Download Firefox
           command: sudo apt-get purge -y firefox && wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_73.0.1-0ubuntu1_amd64.deb
       - run:
-          name: Start Firefox
+          name: Install Firefox
           command: sudo dpkg -i firefox-mozilla-build_73.0.1-0ubuntu1_amd64.deb
       - run: ./ci/browser_tests.sh
       - run: 
