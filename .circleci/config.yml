@@ -32,10 +32,10 @@ jobs:
           background: true
       - run:
           name: Download Firefox
-          command: apt-get purge -y firefox && wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
+          command: sudo apt-get purge -y firefox && wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
       - run:
           name: Start Firefox
-          command: dpkg -i firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
+          command: sudo dpkg -i firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
       - run: ./ci/browser_tests.sh
       - run: 
           name: Deploy
