@@ -27,15 +27,15 @@ jobs:
           name: Download Selenium
           command: ./node_modules/.bin/selenium-standalone install
       - run:
+          name: Start Selenium
+          command: ./node_modules/.bin/selenium-standalone start
+          background: true
+      - run:
           name: Download Firefox
           command: sudo apt-get purge -y firefox && wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
       - run:
           name: Start Firefox
           command: sudo dpkg -i firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
-      - run:
-          name: Start Selenium
-          command: ./node_modules/.bin/selenium-standalone start
-          background: true
       - run: ./ci/browser_tests.sh
       - run: 
           name: Deploy
