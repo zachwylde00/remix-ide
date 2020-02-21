@@ -24,12 +24,18 @@ jobs:
       - run: npm install
       - run: npm run lint && npm run test && npm run make-mock-compiler
       - run:
-          name: Install Selenium
-          command: ./node_modules/.bin/selenium-standalone install
+          name: Download Selenium
+          command: wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
           name: Start Selenium
-          command: ./node_modules/.bin/selenium-standalone start
+          command: java -Dwebdriver.gecko.driver="./geckodriver" -jar selenium-server-standalone-3.5.3.jar
           background: true
+      - run:
+          name: Download Firefox
+          command: apt-get purge -y firefox && wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
+      - run:
+          name: Start Firefox
+          command: dpkg -i firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
       - run: ./ci/browser_tests.sh
       - run: 
           name: Deploy
