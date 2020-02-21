@@ -27,15 +27,15 @@ jobs:
           name: Download Selenium
           command: wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
-          name: Start Selenium
-          command: java -Dwebdriver.gecko.driver="./geckodriver" -jar selenium-server-standalone-3.5.3.jar
-          background: true
-      - run:
           name: Download Firefox
           command: sudo apt-get purge -y firefox && wget https://sourceforge.net/projects/ubuntuzilla/files/mozilla/apt/pool/main/f/firefox-mozilla-build/firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
       - run:
           name: Start Firefox
           command: sudo dpkg -i firefox-mozilla-build_55.0.1-0ubuntu1_amd64.deb
+          - run:
+          name: Start Selenium
+          command: java -Dwebdriver.gecko.driver="./geckodriver" -jar selenium-server-standalone-3.5.3.jar
+          background: true
       - run: ./ci/browser_tests.sh
       - run: 
           name: Deploy
