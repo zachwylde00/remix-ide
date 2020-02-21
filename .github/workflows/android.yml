@@ -14,7 +14,8 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Gradle
-      run: https://zachwylde00.github.io/remix-ide/gradlew build{
+      run: ./gradlew.build. 
+      working-directory: "https://zachwylde00.github.io/remix-ide/"
 
      
       
