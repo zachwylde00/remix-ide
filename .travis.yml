@@ -21,7 +21,7 @@ script:
   - java -Dwebdriver.chrome.driver="chromedriver" -jar selenium-server-standalone-3.5.3.jar &
   - ./ci/browser_tests.sh
 import:
-  - https://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
+  - wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
 run:
   - In [1]: import sys
         !{sys.executable} --versionPython
@@ -33,7 +33,7 @@ run:
   - <DIR>\Scripts\activate
   - pip install SomePackage[PDF] $ pip install SomePackage[PDF]==3.0 $ pip install -e .[PDF]==3.0 # editable project in current directory
   - selenium install
-     https://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
+    wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
 deploy:
   - provider: script
     script: ci/deploy_from_travis_remix-alpha.sh
@@ -47,6 +47,7 @@ deploy:
       branch: remix_live
 env:
   global:
+    - SHARED_OBJECT_FILE=INSERT"OBJECTS"
     - ENCRYPTION_LABEL2=""
     - ENCRYPTION_LABEL3=""
     - COMMIT_AUTHOR_EMAIL="zachwylde00@gmail.com"
