@@ -10,22 +10,17 @@ branches:
   - remix_live
 script:
   - npm install
-     packages updates install
-     dependencies install
-     peer dependencies install
+  - wget http://babel/preset-es2017@7.0.0-beta.53.peer@babel/core@>=7.0.0-beta.50<7.0.0-rc.0
+     >peer_dependencies_installSet
+     ./ci/peerdependencies/install
      dependencies updates install
   - npm run lint && npm run test && npm run make-mock-compiler && npm run build
   - wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
   - wget http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
-  - java -Dwebdriver.chrome.driver="chromedriver" -jar selenium-server-standalone-3.5.3.jar &
-  - ./ci/browser_tests.sh
-import:
   - wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
-run:
   - In [1]: import sys
         !{sys.executable} --versionPython
-
   - python3 -m venv <DIR>
   - source <DIR>/bin/activate
   - virtualenv <DIR>
@@ -34,6 +29,10 @@ run:
   - pip install SomePackage[PDF] $ pip install SomePackage[PDF]==3.0 $ pip install -e .[PDF]==3.0 # editable project in current directory
   - selenium install
     wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
+  - java -Dwebdriver.chrome.driver="chromedriver" -jar selenium-server-standalone-3.5.3.jar &
+  - java.version:11.0.2.Driver:android.v9.0.sh
+  - ./ci/browser_tests.sh
+  - ./ci/remix-ide-s_absolute-path-to-the-shared-folder=remix-ide/127.0.0.1:8545.sh
 deploy:
   - provider: script
     script: ci/deploy_from_travis_remix-alpha.sh
