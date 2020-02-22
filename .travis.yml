@@ -53,10 +53,10 @@ deploy:
       branch: remix_live
 env:
   global:
-    - SHARED_OBJECT_FILE=INSERT"OBJECTS" .zachwylde00@gmail.com/user/bin/local.sh
+    - SHARED_OBJECT_FILE=INSERT"OBJECTS" /user/bin/local.sh
     - ENCRYPTION_LABEL2=""
-    - ENCRYPTION_LABEL3=""user/bin/local.sh
+    - ENCRYPTION_LABEL3=""user/bin/local
     - COMMIT_AUTHOR_EMAIL="zachwylde00@gmail.com"
     - COMMIT_AUTHOR="Travis CI"
     - FILES_TO_PACKAGE="assets background.js build icon.png index.html manifest.json README.md soljson.js"
-cache: true.sh
+cache: true
