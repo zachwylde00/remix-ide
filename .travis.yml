@@ -10,16 +10,34 @@ branches:
   - remix_live
 script:
   - npm install
+     packages updates install
+     dependencies install
+     peer dependencies install
+     dependencies updates install
   - npm run lint && npm run test && npm run make-mock-compiler && npm run build
   - wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
   - wget http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
   - java -Dwebdriver.chrome.driver="chromedriver" -jar selenium-server-standalone-3.5.3.jar &
   - ./ci/browser_tests.sh
+import:
+  - https://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
+run:
+  - In [1]: import sys
+        !{sys.executable} --versionPython
+
+  - python3 -m venv <DIR>
+  - source <DIR>/bin/activate
+  - virtualenv <DIR>
+  - source <DIR>/bin/activate
+  - <DIR>\Scripts\activate
+  - pip install SomePackage[PDF] $ pip install SomePackage[PDF]==3.0 $ pip install -e .[PDF]==3.0 # editable project in current directory
+  - selenium install
+     https://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
 deploy:
   - provider: script
     script: ci/deploy_from_travis_remix-alpha.sh
-    skip_cleanup: true
+    skip_cleanup: false
     on:
       branch: master
   - provider: script
