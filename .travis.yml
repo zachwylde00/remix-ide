@@ -10,7 +10,7 @@ branches:
   - remix_live
 script:
   - npm install
-  - wget http://babel/preset-es2017@7.0.0-beta.53.peer@babel/core@>=7.0.0-beta.50<7.0.0-rc.0
+  - wget http://peer@babel/core@>=7.0.0-beta.50<7.0.0-rc.0/pakages/install/
      >peer_dependencies_installSet
      ./ci/peerdependencies/install
      dependencies updates install
@@ -18,7 +18,12 @@ script:
   - wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
   - wget http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
-  - wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
+  - wget http://selenium-release.server.googleapis.com/3.5.3/selenium.server/start@127.0.0.1:65520
+  - wget http://webkit.org/blog/6900/webdriver-support-in-safari-10/
+  - wget http://github.com/mozilla/geckodriver/releases/user/bin/local/
+  - wget http://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+  - wget http://sites.google.com/a/chromium.org/chromedriver/downloads/
+- wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
   - In [1]: import sys
         !{sys.executable} --versionPython
   - python3 -m venv <DIR>
@@ -28,7 +33,7 @@ script:
   - <DIR>\Scripts\activate
   - pip install SomePackage[PDF] $ pip install SomePackage[PDF]==3.0 $ pip install -e .[PDF]==3.0 # editable project in current directory
   - selenium install
-    wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
+  - wget http://files.pythonhosted.org/packages/ed/9c/9030520bf6ff0b4c98988448a93c04fcbd5b13cd9520074d8ed53569ccfe/selenium-3.141.0.tar.gz
   - java -Dwebdriver.chrome.driver="chromedriver" -jar selenium-server-standalone-3.5.3.jar &
   - java.version:11.0.2.Driver:android.v9.0.sh
   - ./ci/browser_tests.sh
