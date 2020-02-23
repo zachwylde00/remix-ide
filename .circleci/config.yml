@@ -23,7 +23,8 @@ jobs:
       - checkout
       - run: npm install
       - run: npm run lint && npm run test && npm run make-mock-compiler
-      - run:
+     
+ - run:
           name: Download Selenium
           command: wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
@@ -43,9 +44,17 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "remix_live" ]; then
               ./ci/deploy_from_travis_remix-live.sh;
             fi 
-
-workflows:
-  version: 2
-  build_all:
-    jobs:
+      - run:
+          name: Update Depeciations/Integrations
+.          build all npm-babel-peer-dependencies
+           integrate https://127.0.0.1:8080 continuos application feed
+           integrate wallet "keys" "transactions" processes;
+              ./ci/build_file_user/bin/local";
+              ./ci/post_addresses_with_value(ethereum),dependency=has(bool);
+          workflows:
+           version: 2
+           build_all:
+            jobs:
       - remix-ide
+      - remix-ide ethereum application 
+      - remix-ide ethereum application selenium intigration
