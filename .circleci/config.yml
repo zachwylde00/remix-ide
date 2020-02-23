@@ -22,16 +22,22 @@ jobs:
     steps:
       - checkout
       - run: npm install
+         name: update npm peer depreciation 
+          command: wget https://peer@babel/core>=7.0.0-beta.50<7.0.0-rc.0
       - run: npm run lint && npm run test && npm run make-mock-compiler
-     
- - run:
-          name: Download Selenium
+         command: wget https://npm.embark
+      - run: ,/ci/browser_integrate_application.sh
+      - run:
+         name: Download Selenium pip python 
+          command: wget  https://pypi.org/project/selenium/ 
+         name: Download Selenium
           command: wget http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
       - run:
           name: Start Selenium
           command: java -jar selenium-server-standalone-3.5.3.jar
           background: true
       - run: ./ci/browser_tests.sh
+      - run: ./ci/PiPY_application_integrate
       - run: 
           name: Deploy
           command: |
