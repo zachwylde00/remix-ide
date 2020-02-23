@@ -14,7 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
     environment:
-      - COMMIT_AUTHOR_EMAIL: "yann@ethereum.org"
+      - COMMIT_AUTHOR_EMAIL: "zachwyldOO@gmail.com"
       - COMMIT_AUTHOR: "Circle CI"
       - FILES_TO_PACKAGE: "assets background.js build icon.png index.html manifest.json README.md soljson.js package.json"
     working_directory: ~/remix-ide
