@@ -2,7 +2,9 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-      # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+      # Read about caching dependencies: 
+      - run:
+         command: wget https://circleci.com/docs/2.0/caching/
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run:
           command: |
@@ -17,246 +19,16 @@
       - run:
           command: |
             pipenv run python manage.py test
+            ./ci/py_test.sh
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
           path: test-results
           destination: tr1
-version: 2
-jobs:
-  build:
-    docker:
-      - image: ubuntu:14.04
-
-      - image: mongo:2.6.8
-        command: [mongod, --smallfiles]
-
-      - image: postgres:9.4.1
-        # some containers require setting environment variables
-        environment:
-          POSTGRES_USER: root
-
-      - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
-
-      - image: rabbitmq:3.5.4
-
-    environment:
-      TEST_REPORTS: /tmp/test-reports
-
-    working_directory: ~/my-project
-
-    steps:
-      - checkout
-
-      - run:
-          command: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
-
-      # Create Postgres users and database
-      # Note the YAML heredoc '|' for nicer formatting
-      - run: |
-          sudo -u root createuser -h localhost --superuser ubuntu &&
-          sudo createdb -h localhost test_db
-
-      - restore_cache:
-          keys:
-            - v1-my-project-{{ checksum "project.clj" }}
-            - v1-my-project-
-
-      - run:
-          environment:
-            SSH_TARGET: "localhost"
-            TEST_ENV: "linux"
-          command: |
-            set -xu
-            mkdir -p ${TEST_REPORTS}
-            run-tests.sh
-            cp out/tests/*.xml ${TEST_REPORTS}
-
-      - run: |
-          set -xu
-          mkdir -p /tmp/artifacts
-          create_jars.sh ${CIRCLE_BUILD_NUM}
-          cp *.jar /tmp/artifacts
-
-      - save_cache:
-          key: v1-my-project-{{ checksum "project.clj" }}
-          paths:
-            - ~/.m2
-
-      # Save artifacts
-      - store_artifacts:
-          path: /tmp/artifacts
-          destination: build
-
-      # Upload test results
-      - store_test_results:
-          path: /tmp/test-reports
-
-  deploy-stage:
-    docker:
-      - image: ubuntu:14.04
-    working_directory: /tmp/my-project
-    steps:
-      - run:
-          name: Deploy if tests pass and branch is Staging
-          command: ansible-playbook site.yml -i staging
-
-  deploy-prod:
-    docker:
-      - image: ubuntu:14.04
-    working_directory: /tmp/my-project
-    steps:
-      - run:
-          name: Deploy if tests pass and branch is Master
-          command: ansible-playbook site.yml -i production
-
-workflows:
   version: 2
-  build-deploy:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore:
-                - develop
-                - /feature-.*/
-      - deploy-stage:
-          requires:
-            - build
-          filters:
-            branches:
-              only: staging
-      - deploy-prod:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
-version: 2.1
-
-jobs:
-  build:
-    machine:
-      resource_class: gpu.nvidia.small
-      image: ubuntu-1604-cuda-10.1:201909-23
-    steps:
-      - run: nvidia-smi
-      - run: docker run --gpus all nvidia/cuda:9.0-base nvidia-smi
-version: 2
-jobs:
-  build:
-    docker:
-      - image: ubuntu:14.04
-
-      - image: mongo:2.6.8
-        command: [mongod, --smallfiles]
-
-      - image: postgres:9.4.1
-        # some containers require setting environment variables
-        environment:
-          POSTGRES_USER: root
-
-      - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
-
-      - image: rabbitmq:3.5.4
-
-    environment:
-      TEST_REPORTS: /tmp/test-reports
-
-    working_directory: ~/my-project
-
-    steps:
-      - checkout
-
-      - run:
-          command: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
-
-      # Create Postgres users and database
-      # Note the YAML heredoc '|' for nicer formatting
-      - run: |
-          sudo -u root createuser -h localhost --superuser ubuntu &&
-          sudo createdb -h localhost test_db
-
-      - restore_cache:
-          keys:
-            - v1-my-project-{{ checksum "project.clj" }}
-            - v1-my-project-
-
-      - run:
-          environment:
-            SSH_TARGET: "localhost"
-            TEST_ENV: "linux"
-          command: |
-            set -xu
-            mkdir -p ${TEST_REPORTS}
-            run-tests.sh
-            cp out/tests/*.xml ${TEST_REPORTS}
-
-      - run: |
-          set -xu
-          mkdir -p /tmp/artifacts
-          create_jars.sh ${CIRCLE_BUILD_NUM}
-          cp *.jar /tmp/artifacts
-
-      - save_cache:
-          key: v1-my-project-{{ checksum "project.clj" }}
-          paths:
-            - ~/.m2
-
-      # Save artifacts
-      - store_artifacts:
-          path: /tmp/artifacts
-          destination: build
-
-      # Upload test results
-      - store_test_results:
-          path: /tmp/test-reports
-
-  deploy-stage:
-    docker:
-      - image: ubuntu:14.04
-    working_directory: /tmp/my-project
-    steps:
-      - run:
-          name: Deploy if tests pass and branch is Staging
-          command: ansible-playbook site.yml -i staging
-
-  deploy-prod:
-    docker:
-      - image: ubuntu:14.04
-    working_directory: /tmp/my-project
-    steps:
-      - run:
-          name: Deploy if tests pass and branch is Master
-          command: ansible-playbook site.yml -i production
-
-workflows:
-  version: 2
-  build-deploy:
-    jobs:
-      - build:
-          filters:
-            branches:
-              ignore:
-                - develop
-                - /feature-.*/
-      - deploy-stage:
-          requires:
-            - build
-          filters:
-            branches:
-              only: staging
-      - deploy-prod:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
-
-version: 2
-jobs:
-  remix-ide:
-    docker:
+   jobs:
+    remix-ide:
+     docker:
       # specify the version you desire here
       - image: circleci/node:9.11.2-browsers
 
@@ -269,8 +41,7 @@ jobs:
       - COMMIT_AUTHOR: "Circle CI"
       - FILES_TO_PACKAGE: "assets background.js build icon.png index.html manifest.json README.md soljson.js package.json"
     working_directory: ~/remix-ide
-
-    steps:
+     steps:
       - curl https://circleci.com/api/v1.1/
       - api a9b54eee60346a61c0414d1672caa393adbc946b
       - command: ./ci/upload_all_past_and_present_artifacts.sh
@@ -280,50 +51,40 @@ jobs:
           RAILS_ENV: test
           RACK_ENV: test
       - image: circleci/mysql:5.6
-
-    steps:
+     steps:
       - checkout
       - run: cp config/{database_circleci,database}.yml
 
       # Run bundler
       # Load installed gems from cache if possible, bundle install then save cache
       # Multiple caches are used to increase the chance of a cache hit
-
       - restore_cache:
           keys:
             - gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
             - gem-cache-v1-{{ arch }}-{{ .Branch }}
             - gem-cache-v1
-
       - run: bundle install --path vendor/bundle
-
       - save_cache:
           key: gem-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
       - run: bundle exec rubocop
       - run: bundle exec rake db:create db:schema:load --trace
       - run: bundle exec rake factory_girl:lint
-
       # Precompile assets
       # Load assets from cache if possible, precompile assets then save cache
       # Multiple caches are used to increase the chance of a cache hit
-
       - restore_cache:
           keys:
             - asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
             - asset-cache-v1-{{ arch }}-{{ .Branch }}
             - asset-cache-v1
-
       - run: bundle exec rake assets:precompile
-
       - save_cache:
           key: asset-cache-v1-{{ arch }}-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - public/assets
             - tmp/cache/assets/sprockets
-
       - run: bundle exec rspec
       - run: bundle exec cucumber
       - run: npm install
@@ -362,10 +123,85 @@ jobs:
            integrate wallet "keys" "transactions" processes;
               ./ci/build_file_user/bin/local";
               ./ci/post_addresses_with_value(ethereum),dependency=has(bool);
-          workflows:
+      version: 2
+       jobs:
+        build:
+         docker:
+      - image: ubuntu:14.04
+      - image: mongo:2.6.8
+        command: [mongod, --smallfiles]
+      - image: postgres:9.4.1
+        # some containers require setting environment variables
+        environment:
+          POSTGRES_USER: root
+      - image: redis@sha256:54057dd7e125ca41afe526a877e8bd35ec2cdd33b9217e022ed37bdcf7d09673
+      - image: rabbitmq:3.5.4
+    environment:
+      TEST_REPORTS: /tmp/test-reports
+    working_directory: ~/my-project
+    steps:
+      - checkout
+      - run:
+          command: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
+      # Create Postgres users and database
+      # Note the YAML heredoc '|' for nicer formatting
+      - run: |
+          sudo -u root createuser -h localhost --superuser ubuntu &&
+          sudo createdb -h localhost test_db
+      - restore_cache:
+          keys:
+            - v1-my-project-{{ checksum "project.clj" }}
+            - v1-my-project-
+      - run:
+          environment:
+            SSH_TARGET: "localhost"
+            TEST_ENV: "linux"
+          command: |
+            set -xu
+            mkdir -p ${TEST_REPORTS}
+            run-tests.sh
+            cp out/tests/*.xml ${TEST_REPORTS}
+       - run: |
+          set -xu
+          mkdir -p /tmp/artifacts
+          create_jars.sh ${CIRCLE_BUILD_NUM}
+          cp *.jar /tmp/artifacts
+       - save_cache:
+          key: v1-my-project-{{ checksum "project.clj" }}
+          paths:
+            - ~/.m2
+      # Save artifacts
+      - store_artifacts:
+          path: /tmp/artifacts
+          destination: build
+      # Upload test results
+      - store_test_results:
+          path: /tmp/test-reports
+    deploy-stage:
+     docker:
+      - image: ubuntu:14.04
+    working_directory: /tmp/my-project
+     steps:
+      - run:
+          name: Deploy if tests pass and branch is Staging
+          command: ansible-playbook site.yml -i staging
+    deploy-prod:
+    docker:
+      - image: ubuntu:14.04
+    working_directory: /tmp/my-project
+    steps:
+      - run:
+          name: Deploy if tests pass and branch is Master
+          command: ansible-playbook site.yml -i production
+    workflows:
            version: 2
            build_all:
             jobs:
+      - python
+      - docker
+      - npm reinstall with updated depreciation
       - remix-ide
       - remix-ide ethereum application 
       - remix-ide ethereum application selenium intigration
+      - postgres
+      - artifacts
